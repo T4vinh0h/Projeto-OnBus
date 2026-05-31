@@ -114,4 +114,4 @@ para mais informações.
 
 ---
 📝 **Projeto Acadêmico**
-Desenvolvido com foco em Engenharia de Software E UX/UI Design visando Mobilidade Urbana Inteligente. 🎓🚌
+Desenvolvido por Otávio Santos/T4vinhoh(Github) com foco em Engenharia de Software E UX/UI Design visando Mobilidade Urbana Inteligente. 🎓🚌
