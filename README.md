@@ -20,10 +20,10 @@ Edite o arquivo `BackEnd/src/config/database.ts` se precisar ajustar suas creden
 ```typescript
 export const databaseConfig = {
     host: "localhost",
-    user: "postgres",       // Seu usuário PostgreSQL
-    password: "sua_senha",  // Sua senha PostgreSQL
+    user: "MySQL",       // Seu usuário MySQL
+    password: "sua_senha",  // Sua senha MySQL
     database: "onbus",
-    port: 5432
+    port: 3306
 };
 ```
 
@@ -116,9 +116,9 @@ OnBus/
 *   `GET /onibus/tempo-real` - Localização dos ônibus em tempo real.
 
 ## 📚 Tecnologias Utilizadas
-*   **Backend:** Node.js, TypeScript, Express, JWT.
+*   **Backend:** Node.js, TypeScript, Python, Express, Knex.js, JWT.
 *   **Banco de Dados:** MySQL.
-*   **Frontend:** React, TypeScript, Vite, HTML5, CSS3.
+*   **Frontend:** React, TypeScript, Next.js, HTML5, CSS3.
 *   **Design:** Figma.
 *   **Testes:** Jest, Cypress, Postman.
 ---
