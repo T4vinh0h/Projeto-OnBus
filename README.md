@@ -4,15 +4,15 @@ O **OnBus** é uma plataforma completa (Fullstack) desenvolvida para modernizar 
 ## 📋 Pré-requisitos
 Antes de começar, você precisa ter instalado em sua máquina:
 *   **Node.js** (versão 18 ou superior) - [Baixe aqui](https://nodejs.org/)
-*   **PostgreSQL** (versão 15 ou superior) - [Baixe aqui](https://www.postgresql.org/download/)
+*   **MySQL** (versão 8 ou superior) - [Baixe aqui](https://dev.mysql.com/downloads/)
 *   **VS Code** ou outro editor de código.
 *   **Navegador atualizado** (Google Chrome, Microsoft Edge ou Firefox).
 
 ## 🚀 Passo a Passo para Rodar o Projeto
 
 ### 1️⃣ Configurar o Banco de Dados
-1.  Abra o PostgreSQL ou seu terminal psql.
-2.  Execute o script SQL localizado em: `BackEnd/database/onbus.sql`.
+1.  Abra o **MySQL Workbench** ou seu terminal `mysql`.
+2.  Execute o script SQL localizado em: `backend/src/database/systemOnbus.sql`.
     *   Isso criará todas as estruturas necessárias: `usuarios`, `cartoes`, `recargas`, `passagens`, `linhas`, `rotas`, `paradas`, `frota` e demais tabelas do sistema.
 
 ### 2️⃣ Configurar a Conexão
@@ -27,19 +27,32 @@ export const databaseConfig = {
 };
 ```
 
+Crie o arquivo `.env` na pasta `backend/` (use o `.env.example` como base) com suas credenciais:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_NAME=system_onbus
+
+PORT=3000
+
+JWT_SECRET=sua_chave_secreta_aqui
+```
+
 ### 3️⃣ Instalar Dependências e Rodar o BackEnd
-No terminal, vá para a pasta BackEnd:
+No terminal, vá para a pasta backend:
 ```bash
-cd BackEnd
+cd backend
 npm install
 npm run dev
 ```
 Se tudo estiver correto, você verá: **Servidor OnBus iniciado na porta 3000 🚀**
 
 ### 4️⃣ Rodar o FrontEnd
-No terminal, vá para a pasta FrontEnd:
+No terminal, vá para a pasta frontend:
 ```bash
-cd FrontEnd
+cd frontend
 npm install
 npm run dev
 ```
@@ -48,27 +61,36 @@ O sistema estará disponível em: `http://localhost:5173`
 ## 📂 Estrutura do Projeto
 ```text
 OnBus/
-├── BackEnd/
+├── backend/
+│   ├── .env                   # Variáveis de ambiente (protegido)
+│   ├── .env.example           # Template das variáveis
+│   ├── package.json           # Dependências do backend
 │   ├── src/
-│   │   ├── controllers/   # Lógica (usuarios, cartoes, recargas, linhas)
-│   │   ├── services/      # Regras de negócio
-│   │   ├── routes/        # Rotas da API
-│   │   ├── middlewares/   # Autenticação JWT
-│   │   ├── models/        # Modelos de dados
-│   │   ├── config/        # Configuração do banco
-│   │   └── server.ts      # Main do servidor
-│   └── tests/
-├── FrontEnd/
+│   │   ├── config/            # Configuração do banco (Knex)
+│   │   ├── controllers/       # Lógica (usuarios, cartoes, recargas, linhas)
+│   │   ├── database/          # Scripts SQL
+│   │   │   └── systemOnbus.sql
+│   │   ├── middleware/        # Autenticação JWT
+│   │   ├── models/            # Modelos de dados
+│   │   ├── routes/            # Rotas da API
+│   │   ├── services/          # Regras de negócio
+│   │   └── server.js          # Entry point do servidor
+│   └── tests/                 # Testes automatizados
+├── frontend/
+│   ├── .vscode/               # Configurações do VS Code
 │   └── src/
-│       ├── assets/        # Imagens e recursos
-│       ├── components/    # Componentes reutilizáveis
-│       ├── pages/         # Páginas do sistema
-│       ├── services/      # Consumo da API
-│       ├── hooks/         # Hooks customizados
-│       ├── styles/        # Estilos globais
-│       └── App.tsx        # Componente raiz
-├── docs/
-├── prototipos/
+│       ├── App.tsx            # Componente raiz
+│       ├── assets/            # Imagens e recursos
+│       ├── components/        # Componentes reutilizáveis
+│       ├── hooks/             # Hooks customizados
+│       ├── pages/             # Páginas do sistema
+│       ├── scripts/           # Scripts auxiliares
+│       ├── services/          # Consumo da API
+│       └── styles/            # Estilos globais
+├── docs/                      # Documentação do projeto
+├── prototipos/                # Protótipos e wireframes
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
@@ -95,7 +117,7 @@ OnBus/
 
 ## 📚 Tecnologias Utilizadas
 *   **Backend:** Node.js, TypeScript, Express, JWT.
-*   **Banco de Dados:** PostgreSQL.
+*   **Banco de Dados:** MySQL.
 *   **Frontend:** React, TypeScript, Vite, HTML5, CSS3.
 *   **Design:** Figma.
 *   **Testes:** Jest, Cypress, Postman.
