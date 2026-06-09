@@ -2,158 +2,267 @@
 
 O **OnBus** é uma plataforma Full Stack de bilhetagem eletrônica para transporte coletivo urbano, inspirada no ecossistema de mobilidade da cidade de Pelotas/RS.
 
-O sistema foi projetado para atender três perfis principais de usuários:
+O sistema foi projetado para atender usuários comuns, estudantes e idosos, oferecendo recursos como emissão de cartões físicos e digitais, recargas online, consulta de saldo em tempo real, validação de embarque, gestão de cartões e monitoramento operacional.
 
-* Usuários Comuns
-* Estudantes
-* Idosos
-
-Seu principal objetivo é eliminar problemas recorrentes de compensação de créditos, dependência de conectividade constante e limitações dos sistemas tradicionais de transporte público.
-
-A arquitetura do projeto combina processamento local e infraestrutura em nuvem, permitindo operação offline nas catracas e sincronização automática quando a conexão for restabelecida.
+Sua arquitetura híbrida combina processamento local e infraestrutura em nuvem, permitindo operação offline nas catracas e sincronização automática dos dados quando a conectividade é restabelecida.
 
 ---
 
-# 🎯 Objetivos Estratégicos
+## 🎯 Objetivos do Sistema
 
 * Consulta de saldo em tempo real.
 * Recargas instantâneas via Pix.
-* Operação offline em validadores de embarque.
-* Segurança contra clonagem e fraudes.
+* Operação offline nas catracas.
+* Segurança contra fraudes e clonagem.
 * Conformidade com a LGPD.
-* Cartões físicos e digitais.
 * Personalização visual de cartões.
 * Integração entre bilhetagem e informações de transporte.
+* Monitoramento operacional da frota.
+* Experiência acessível para estudantes, idosos e trabalhadores.
 
 ---
 
-# 🏗️ Arquitetura do Sistema
+## 📋 Pré-requisitos
 
-O OnBus utiliza uma arquitetura híbrida composta por dois ambientes:
+Antes de começar, você precisa ter instalado em sua máquina:
 
-## Ambiente Local (Contingência)
+* **Node.js** (versão 18 ou superior) - https://nodejs.org/
+* **MySQL** (versão 8 ou superior) - https://dev.mysql.com/downloads/
+* **VS Code** ou outro editor de código.
+* **Navegador atualizado** (Google Chrome, Microsoft Edge ou Firefox).
 
-* MySQL local embarcado nos validadores.
-* Operação offline da catraca.
-* Tempo de resposta inferior a 1 segundo.
-* Sincronização posterior com a nuvem.
+---
 
-## Ambiente Online (Nuvem)
+## 🚀 Passo a Passo para Rodar o Projeto
 
-* Supabase (PostgreSQL).
+### 1️⃣ Configurar o Banco de Dados
+
+1. Abra o **MySQL Workbench** ou seu terminal mysql.
+2. Execute o script SQL localizado em:
+
+```text
+backend/src/database/systemOnbus.sql
+```
+
+Isso criará todas as estruturas necessárias:
+
+* usuarios
+* cartoes
+* recargas
+* passagens
+* linhas
+* rotas
+* paradas
+* frota
+
+e demais tabelas do sistema.
+
+---
+
+### 2️⃣ Configurar a Conexão
+
+Edite o arquivo:
+
+```text
+backend/src/config/database.ts
+```
+
+caso precise alterar as credenciais do banco.
+
+```typescript
+export const databaseConfig = {
+    host: "localhost",
+    user: "root",
+    password: "sua_senha",
+    database: "onbus",
+    port: 3306
+};
+```
+
+Crie um arquivo `.env` dentro da pasta backend utilizando o `.env.example` como base:
+
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=sua_senha
+DB_NAME=system_onbus
+
+PORT=3000
+
+JWT_SECRET=sua_chave_secreta_aqui
+```
+
+---
+
+### 3️⃣ Instalar Dependências e Rodar o Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Se tudo estiver correto:
+
+```text
+Servidor OnBus iniciado na porta 3000 🚀
+```
+
+---
+
+### 4️⃣ Rodar o Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+A aplicação ficará disponível em:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 📂 Estrutura do Projeto
+
+```text
+OnBus/
+├── backend/
+│   ├── .env
+│   ├── .env.example
+│   ├── package.json
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── database/
+│   │   │   └── systemOnbus.sql
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── server.js
+│   └── tests/
+│
+├── frontend/
+│   ├── .vscode/
+│   └── src/
+│       ├── App.tsx
+│       ├── assets/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── scripts/
+│       ├── services/
+│       └── styles/
+│
+├── docs/
+├── prototipos/
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+
+---
+
+## 🏗️ Arquitetura do Sistema
+
+O OnBus utiliza uma arquitetura híbrida distribuída entre ambiente local e ambiente online.
+
+### Ambiente Local (Validador de Embarque)
+
+* Banco MySQL local embarcado na catraca.
+* Operação totalmente offline.
+* Resposta inferior a 1 segundo.
+* Registro local das transações.
+* Sincronização automática quando a conexão retornar.
+
+### Ambiente Online (Nuvem)
+
 * API REST em Node.js e TypeScript.
-* Processamento de pagamentos.
+* Banco Supabase (PostgreSQL).
 * Gerenciamento de usuários.
-* Atualização centralizada de dados.
+* Processamento de recargas.
+* Integração com gateways de pagamento.
+* Atualização centralizada dos dados.
+
+### Comunicação
+
+* REST API para operações convencionais.
+* WebSockets para eventos em tempo real.
+* Webhooks para confirmação automática de pagamentos.
+
 
 ---
 
-# 👥 Equipe e Responsabilidades
+## ✨ Funcionalidades do MVP
 
-### Júlia — UX/UI Design
+### Usuários
 
-* Wireframes
-* Protótipos
-* Fluxos de navegação
-* Design System
-* Acessibilidade (WCAG)
+* Cadastro de usuários.
+* Login com JWT.
+* Edição de perfil.
+* Recuperação de senha.
+* Exclusão de conta (LGPD).
 
-### Otávio — Front-end
+### Cartões
 
-* Interfaces responsivas
-* Formulários
-* JavaScript Vanilla
-* CSS e temas dinâmicos
+* Cartão comum.
+* Cartão estudante.
+* Cartão idoso.
+* Cartões físicos e digitais.
+* Bloqueio de cartão.
+* Segunda via.
+* Múltiplos cartões por usuário.
 
-### Enrique — Back-end e Arquitetura
+### Financeiro
 
-* APIs REST
-* Modelagem POO
-* Segurança
-* Integração de pagamentos
-* Supabase
-* MySQL + Knex.js
+* Consulta de saldo.
+* Recarga online.
+* Histórico de recargas.
+* Extrato financeiro.
 
-### Lucas — Back-end e QA
+### Transporte
 
-* Testes automatizados
-* Integração Front-end/Back-end
-* Controle de qualidade
-* Administração do GitHub
-
----
-
-# 🚀 Funcionalidades do MVP
-
-## Autenticação
-
-* Cadastro de usuários
-* Login seguro
-* Edição de perfil
-* Recuperação de senha
-* Exclusão de conta (LGPD)
-
-## Cartões
-
-* Emissão de cartões:
-
-  * Comum
-  * Estudante
-  * Idoso
-
-* Cartão físico e digital
-
-* Bloqueio por perda ou roubo
-
-* Segunda via
-
-* Múltiplos cartões por usuário
-
-## Financeiro
-
-* Consulta de saldo
-* Recarga via Pix
-* Histórico de recargas
-* Extrato financeiro
-
-## Transporte
-
-* Consulta de horários
-* Itinerários
-* Histórico de viagens
-* Validação por QR Code
-* Validação por cartão físico
+* Consulta de horários.
+* Itinerários.
+* Histórico de viagens.
+* Validação por QR Code.
+* Validação por cartão físico.
 
 ---
 
-# 🔮 Funcionalidades Pós-MVP
+## 🚀 Roadmap Pós-MVP
 
-## Mobilidade Inteligente
+### Mobilidade Inteligente
 
-* Rastreamento GPS em tempo real
-* Previsão de chegada dos ônibus
-* Mapa interativo
-* Monitoramento da frota
+* Rastreamento GPS em tempo real.
+* Previsão de chegada dos ônibus.
+* Mapeamento interativo.
+* Monitoramento da frota.
 
-## Inteligência e Engajamento
+### Inteligência e Engajamento
 
-* Cashback
-* Gamificação
-* Chatbot inteligente
-* Dashboard analítico
+* Cashback.
+* Gamificação.
+* Chatbot inteligente.
+* Dashboard analítico.
 
-## Acessibilidade
+### Acessibilidade
 
-* Leitores de tela
-* Controle por voz
-* Alto contraste
-* Temas adaptáveis
+* Leitores de tela.
+* Controle por voz.
+* Alto contraste.
+* Temas personalizados.
 
 ---
 
-# 📚 Tecnologias Utilizadas
+## 📚 Tecnologias Utilizadas
 
-## Back-end
+### Backend
 
 * Node.js
 * TypeScript
@@ -162,71 +271,93 @@ O OnBus utiliza uma arquitetura híbrida composta por dois ambientes:
 * JWT
 * bcryptjs
 
-## Banco de Dados
+### Banco de Dados
 
 * MySQL
-* PostgreSQL (Supabase)
+* Supabase (PostgreSQL)
 
-## Front-end
+### Frontend
 
 * HTML5
 * CSS3
 * JavaScript (ES6+)
 
-## Comunicação
+### Comunicação
 
 * REST API
 * WebSockets
 * Webhooks
 
-## Infraestrutura
+### Infraestrutura
 
 * Render
-* GitHub Actions (CI/CD)
+* GitHub
+* CI/CD
 
-## Visualização e Interface
+### Interface e Visualização
 
 * Canva
 * Figma
 * GSAP
 * Three.js
 
-## Testes
+### Testes
 
 * Jest
 * Postman
 
 ---
 
-# 🔒 Segurança
+## 🔒 Segurança
 
-* HTTPS/TLS
-* JWT Authentication
-* Hashing com bcryptjs
-* Tokenização de pagamentos
-* Conformidade com a LGPD
-* Direito ao Esquecimento
+* Autenticação JWT.
+* Hash de senhas com bcryptjs.
+* HTTPS/TLS.
+* Proteção contra fraudes.
+* Tokenização de pagamentos.
+* Conformidade com a LGPD.
+* Direito ao Esquecimento.
+
+---
+
+## 👥 Equipe
+
+### Júlia — UX/UI Design
+
+* Wireframes.
+* Protótipos.
+* Design System.
+* Fluxos de navegação.
+* Acessibilidade.
+
+### Otávio — Front-end
+
+* Interfaces responsivas.
+* JavaScript.
+* CSS.
+* Temas dinâmicos.
+
+### Enrique — Back-end e Arquitetura
+
+* APIs REST.
+* Modelagem orientada a objetos.
+* Segurança.
+* Integração de pagamentos.
+* Supabase.
+* MySQL.
+
+### Lucas — Back-end e QA
+
+* Testes automatizados.
+* Integração Front-end/Back-end.
+* Controle de qualidade.
+* Administração do GitHub.
 
 ---
 
-# 📈 Roadmap
+Desenvolvido por:
 
-## Fase 1 — MVP
-
-* Bilhetagem digital
-* Consulta de saldo
-* Recarga instantânea
-* Operação offline
-* Bloqueio de cartões
-* Itinerários
-
-## Fase 2 — Plataforma Inteligente
-
-* GPS em tempo real
-* Mapa 3D
-* Cashback
-* Gamificação
-* Chatbot
-* Analytics operacional
-
----
+* JUlia
+* Otávio Santos
+* Enrique
+* Lucas
