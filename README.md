@@ -327,19 +327,19 @@ Ela contém informações detalhadas sobre:
 
 ## 👥 Equipe
 
-### Júlia
+### Julia Coinceição
 
 UX/UI Design, prototipação, fluxos de navegação e acessibilidade.
 
-### Otávio Santos (T4vinhoh)
+### Otávio Santos
 
 Desenvolvimento Frontend e implementação das interfaces.
 
-### Enrique
+### Enrique Silveira
 
 Arquitetura Backend, banco de dados, APIs REST, segurança e integrações.
 
-### Lucas
+### Lucas Moreira
 
 Back-end, integração dos módulos, testes automatizados e QA.
 
