@@ -22,8 +22,8 @@ Antes de começar, você precisa ter instalado em sua máquina:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/onbus.git
-cd onbus
+git clone https://github.com/T4vinh0h/Projeto-OnBus.git
+cd Projeto-OnBus
 ```
 
 Instale as dependências do backend:
@@ -292,7 +292,17 @@ OnBus/
 
 ### Testes
 
-* Postman
+* CLI interativa
+
+---
+
+## 🧪 CLI de Testes
+
+Durante o desenvolvimento, a validação do backend é feita por uma CLI interativa que permite simular os fluxos do sistema sem depender do frontend.
+
+```bash
+npm run cli
+```
 
 ---
 
@@ -334,6 +344,6 @@ Arquitetura Backend, banco de dados, APIs REST, segurança e integrações.
 
 ### Lucas Moreira
 
-Back-end, integração dos módulos, testes automatizados e QA.
+Backend, integração dos módulos, testes automatizados e QA.
 
 ---

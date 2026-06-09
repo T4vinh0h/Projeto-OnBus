@@ -1,11 +1,12 @@
 {
-  "dependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.9.1",
-    "express": "^5.2.1",
-    "knex": "^3.2.10",
-    "mysql2": "^3.22.4",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
+  "name": "onbus",
+  "version": "1.0.0",
+  "description": "OnBus - Sistema Inteligente de Bilhetagem e Mobilidade Urbana",
+  "scripts": {
+    "dev": "cd backend && npm run dev",
+    "cli": "cd backend && npm run cli",
+    "setup": "echo Setup do banco de dados (em desenvolvimento)",
+    "web": "echo Frontend em desenvolvimento",
+    "full": "npm run setup && npm run dev"
   }
 }

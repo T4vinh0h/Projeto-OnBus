@@ -1,6 +1,6 @@
 # 3.1 Mapeamento Estruturado de Interfaces
 
-O desenvolvimento do Front-end do ecossistema OnBus está dimensionado para cobrir todas as jornadas de usuário, fluxos administrativos, operações de campo e estados de contingência.
+O desenvolvimento do Frontend do ecossistema OnBus está dimensionado para cobrir todas as jornadas de usuário, fluxos administrativos, operações de campo e estados de contingência.
 
 As interfaces seguem o conceito **Mobile-First** para o passageiro e layouts responsivos para os portais administrativos e operacionais.
 
@@ -186,7 +186,7 @@ Cada componente deve prever os seguintes estados:
 - Erro
 - Loading
 
-# 3.4 Arquitetura de Desenvolvimento Front-end
+# 3.4 Arquitetura de Desenvolvimento Frontend
 
 Para conectar as interfaces à camada de engenharia, a implementação deve seguir os seguintes princípios.
 
@@ -199,7 +199,7 @@ Renderização de listas e dados utilizando:
 
 ## Injeção Dinâmica de Temas
 
-O Front-end não deve possuir temas estáticos.
+O Frontend não deve possuir temas estáticos.
 
 A lógica da aplicação deve consumir o atributo `layoutBaseId` fornecido pela API e aplicar dinamicamente a classe CSS correspondente.
 

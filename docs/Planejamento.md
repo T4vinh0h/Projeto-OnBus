@@ -10,23 +10,23 @@ Estrutura o Design System e especifica componentes focados em acessibilidade (WC
 
 **Ferramenta:** Canva.
 
-## Otávio (Front-end - Interface)
+## Otávio (Frontend - Interface)
 
 Traduz protótipos em código funcional.
 
 Atua na codificação de telas responsivas, construção de formulários e manipulação dinâmica do DOM com JavaScript Vanilla, além de estruturar o CSS para temas dinâmicos dos cartões.
 
-## Enrique (Back-end - Arquitetura e Dados)
+## Enrique (Backend - Arquitetura e Dados)
 
 Engenharia de dados, segurança e regras de negócio.
 
 Constrói APIs REST em TypeScript, modela classes (POO), integra webhooks de pagamento, gerencia criptografia e estrutura bancos online (Supabase) e local (MySQL via Knex.js).
 
-## Lucas (Back-end, Integração e QA)
+## Lucas (Backend, Integração e QA)
 
 Apoio ao desenvolvimento em TypeScript e liderança de QA.
 
-Escreve testes unitários, simula cenários de estresse para a catraca local e auxilia na integração do Front-end com a API.
+Escreve testes unitários, simula cenários de estresse para a catraca local e auxilia na integração do Frontend com a API.
 
 Administrador do repositório no GitHub.
 
@@ -135,12 +135,12 @@ Para suportar inovações sem instabilidade, novas funcionalidades seguem um flu
 
 ## Análise de Acoplamento
 
-- Back-end avalia a necessidade de novos campos
+- Backend avalia a necessidade de novos campos
 - Criação de migrations isoladas no Knex.js
 
 ## Abstração de Componentes
 
-- Front-end isola a nova feature em componentes independentes
+- Frontend isola a nova feature em componentes independentes
 - Aplicação dos conceitos de alta coesão e baixo acoplamento
 
 # 2.6 Análise de Viabilidade Técnica e Estratégia de Transição

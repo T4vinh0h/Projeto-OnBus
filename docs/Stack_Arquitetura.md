@@ -2,20 +2,20 @@
 
 O ecossistema OnBus adota o paradigma de **Orientação a Objetos (POO)**.
 
-O Back-end utiliza TypeScript para garantir a robustez das regras de negócio, enquanto o Front-end utiliza JavaScript para agilidade na manipulação de interface.
+O Backend utiliza TypeScript para garantir a robustez das regras de negócio, enquanto o Frontend utiliza JavaScript para agilidade na manipulação de interface.
 
 ## Hospedagem e Deploy
 
 - Render (Node.js)
 - Pipelines de CI/CD automatizados via GitHub
 
-## Back-end
+## Backend
 
 - Node.js
 - Express.js
 - TypeScript
 
-## Front-end
+## Frontend
 
 - HTML5
 - CSS3
@@ -154,6 +154,8 @@ Validação dos principais componentes do sistema:
 - Expiração de tokens
 - Endpoints da API REST
 - Regras de negócio
+
+**Ferramenta:** CLI interativa para simulação de fluxos e validação de endpoints.
 
 ### Testes de Performance
 

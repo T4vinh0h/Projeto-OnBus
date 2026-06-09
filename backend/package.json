@@ -2,10 +2,12 @@
   "name": "onbus-backend",
   "version": "1.0.0",
   "description": "API do sistema OnBus - Transporte coletivo urbano",
-  "main": "src/index.js",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "cli": "tsx src/cli.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,8 +18,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.2.10",
     "mysql2": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.8.3"
   }
 }

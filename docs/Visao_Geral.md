@@ -126,7 +126,7 @@ A pesquisa quantificará a frequência com que falhas na bilhetagem empurram o t
 
 ## 7. Síntese Analítica e Impacto no MVP
 
-Os resultados coletados serão estruturados em uma Matriz Esforço vs. Valor para calibrar o Back-end (Enrique e Lucas) e o Front-end (Otávio e Júlia).
+Os resultados coletados serão estruturados em uma Matriz Esforço vs. Valor para calibrar o Backend (Enrique e Lucas) e o Frontend (Otávio e Júlia).
 
 O MVP priorizará estritamente os recursos de exibição de saldo e compensação imediata via Pix.
 
