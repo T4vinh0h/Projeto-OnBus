@@ -9,14 +9,11 @@ Sua arquitetura híbrida permite que os validadores operem mesmo sem conexão co
 ---
 
 ## 📋 Pré-requisitos
-
 Antes de começar, você precisa ter instalado em sua máquina:
-
-* Node.js 18 ou superior
-* MySQL 8 ou superior
-* Git
-* VS Code (ou outro editor de código)
-* Navegador atualizado
+*   **Node.js** (versão 18 ou superior) - [Baixe aqui](https://nodejs.org/)
+*   **MySQL** (versão 8 ou superior) - [Baixe aqui](https://dev.mysql.com/downloads/)
+*   **VS Code** ou outro editor de código.
+*   **Navegador atualizado** (Google Chrome, Microsoft Edge ou Firefox).
 
 ---
 
