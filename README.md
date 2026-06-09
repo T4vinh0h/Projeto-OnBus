@@ -1,119 +1,53 @@
 # 🚌 OnBus - Sistema Inteligente de Bilhetagem e Mobilidade Urbana
 
-O **OnBus** é um ecossistema digital de bilhetagem eletrônica para transporte coletivo urbano, inspirado na realidade operacional de Pelotas/RS.
+O **OnBus** é uma plataforma Full Stack de bilhetagem eletrônica para transporte coletivo urbano, inspirada no ecossistema de mobilidade de Pelotas/RS.
 
-O projeto foi concebido para atender usuários comuns, estudantes e idosos por meio de uma plataforma integrada que combina gestão de cartões, recargas digitais, validação de embarque, monitoramento operacional e recursos de mobilidade inteligente.
+O sistema foi desenvolvido para modernizar a experiência dos passageiros e operadores do transporte público, oferecendo recursos como gestão de cartões físicos e digitais, recargas online, consulta de saldo, validação de embarque e monitoramento operacional.
 
-Diferentemente dos sistemas tradicionais, o OnBus utiliza uma arquitetura híbrida, permitindo que validadores de embarque operem localmente mesmo sem acesso à internet, sincronizando posteriormente com a infraestrutura em nuvem.
-
----
-
-# 🎯 Objetivos do Sistema
-
-* Disponibilizar saldo e histórico de utilização de forma transparente.
-* Permitir recargas instantâneas via Pix.
-* Eliminar a dependência de conectividade constante.
-* Garantir operação offline nas catracas.
-* Proteger os dados dos usuários em conformidade com a LGPD.
-* Reduzir falhas operacionais relacionadas à compensação de créditos.
-* Disponibilizar recursos de acessibilidade para diferentes perfis de passageiros.
-* Integrar bilhetagem, transporte e monitoramento em uma única plataforma.
+Sua arquitetura híbrida permite que os validadores operem mesmo sem conexão com a internet, sincronizando automaticamente os dados com a nuvem quando a conectividade for restabelecida.
 
 ---
 
-# 👥 Público-Alvo
+## 📋 Pré-requisitos
 
-## Usuário Comum
+Antes de começar, você precisa ter instalado em sua máquina:
 
-Passageiros que dependem diariamente do transporte público para deslocamentos profissionais e necessitam de previsibilidade, agilidade e consulta rápida de saldo.
-
-## Estudante
-
-Usuários com alta familiaridade digital que buscam praticidade, integração acadêmica e substituição do cartão físico por soluções digitais.
-
-## Idoso
-
-Passageiros que necessitam de interfaces acessíveis, suporte simplificado, alto contraste visual e proteção adicional contra fraudes.
-
----
-
-# 🏗️ Arquitetura do Sistema
-
-O OnBus utiliza uma arquitetura distribuída composta por dois ambientes complementares.
-
-## Ambiente Local (Operação Offline)
-
-Responsável pela continuidade operacional dos validadores de embarque.
-
-### Características
-
-* Banco de dados MySQL local.
-* Operação independente da internet.
-* Processamento de embarque em menos de 1 segundo.
-* Armazenamento temporário de transações.
-* Sincronização automática com a nuvem após reconexão.
-
----
-
-## Ambiente Online (Nuvem)
-
-Responsável pelo gerenciamento centralizado do sistema.
-
-### Características
-
-* APIs REST.
-* Banco Supabase (PostgreSQL).
-* Processamento de pagamentos.
-* Gestão de usuários.
-* Atualização de saldo.
-* Administração de linhas, rotas e frota.
-* Integrações externas.
-
----
-
-## Comunicação
-
-### REST API
-
-Utilizada para:
-
-* Autenticação.
-* Consulta de dados.
-* Operações administrativas.
-* Gestão financeira.
-
-### WebSockets
-
-Utilizados para:
-
-* Rastreamento em tempo real.
-* Atualização instantânea de localização.
-* Eventos operacionais.
-
-### Webhooks
-
-Utilizados para:
-
-* Confirmação de pagamentos.
-* Liberação automática de créditos.
-* Processos assíncronos.
-
----
-
-# 🚀 Instalação e Execução
-
-## Pré-requisitos
-
-* Node.js 18+
-* MySQL 8+
+* Node.js 18 ou superior
+* MySQL 8 ou superior
 * Git
-* Navegador moderno
+* VS Code (ou outro editor de código)
+* Navegador atualizado
 
 ---
 
-## Configuração do Ambiente
+## 🚀 Instalação
 
-Crie um arquivo `.env` na pasta do backend utilizando o `.env.example` como base.
+Clone o repositório:
+
+```bash
+git clone https://github.com/seu-usuario/onbus.git
+cd onbus
+```
+
+Instale as dependências do backend:
+
+```bash
+cd backend
+npm install
+```
+
+Instale as dependências do frontend:
+
+```bash
+cd ../frontend
+npm install
+```
+
+---
+
+## ⚙️ Configuração
+
+Crie um arquivo `.env` dentro da pasta `backend/` utilizando o `.env.example` como base.
 
 ### Exemplo
 
@@ -169,37 +103,23 @@ WEBHOOK_SECRET=sua_chave_webhook
 # =====================================================
 
 WS_PORT=3001
-
-# =====================================================
-# GPS
-# =====================================================
-
-GPS_UPDATE_INTERVAL=10000
 ```
+
+### Modos disponíveis
+
+| Modo   | Descrição                                |
+| ------ | ---------------------------------------- |
+| local  | Utiliza apenas o MySQL local             |
+| online | Utiliza apenas o Supabase                |
+| hybrid | Utiliza MySQL e Supabase simultaneamente |
+
+O modo **hybrid** é o recomendado por representar a arquitetura oficial do projeto.
 
 ---
 
-# 📦 Instalação das Dependências
+## 📦 Comandos
 
-Backend:
-
-```bash
-cd backend
-npm install
-```
-
-Frontend:
-
-```bash
-cd frontend
-npm install
-```
-
----
-
-# ⚙️ Comandos do Projeto
-
-## Configurar Banco de Dados
+### Configurar Banco de Dados
 
 ```bash
 npm run setup
@@ -207,16 +127,15 @@ npm run setup
 
 Funções:
 
-* Cria toda a estrutura do banco de dados.
-* Executa migrations.
-* Executa seeds.
+* Cria a estrutura completa do banco de dados.
+* Executa migrations e configurações iniciais.
 * Caso as tabelas já existam, elas serão removidas e recriadas.
 
 > Atenção: este comando apaga os dados existentes.
 
 ---
 
-## Executar Backend
+### Executar Backend
 
 ```bash
 npm run dev
@@ -225,12 +144,12 @@ npm run dev
 Funções:
 
 * Inicializa o servidor.
-* Verifica portas ocupadas.
+* Verifica se a porta já está em uso.
 * Reinicia automaticamente processos anteriores quando necessário.
 
 ---
 
-## Executar Frontend
+### Executar Frontend
 
 ```bash
 npm run web
@@ -243,7 +162,7 @@ Funções:
 
 ---
 
-## Executar Tudo (Recomendado)
+### Executar Tudo (Recomendado)
 
 ```bash
 npm run full
@@ -251,13 +170,13 @@ npm run full
 
 Executa automaticamente:
 
-1. Configuração do banco (`setup`)
+1. Configuração do banco de dados (`setup`)
 2. Inicialização do backend (`dev`)
 3. Inicialização do frontend (`web`)
 
 ---
 
-# 🌐 Acesso ao Sistema
+## 🌐 Acesso ao Sistema
 
 Frontend:
 
@@ -273,232 +192,156 @@ http://localhost:3000
 
 ---
 
-# 📋 Requisitos Funcionais
+## 🏗️ Arquitetura
 
-### RF01 — Cadastro de Usuário
+O OnBus utiliza uma arquitetura híbrida composta por:
 
-Criação de perfis distintos para:
+### Banco Local (MySQL)
 
-* Comum
-* Estudante
-* Idoso
+Responsável pela operação offline dos validadores de embarque.
 
-### RF02 — Autenticação
+### Banco Online (Supabase)
 
-Login seguro com gerenciamento de sessão por token.
+Responsável pela centralização e sincronização dos dados do sistema.
 
-### RF03 — Edição de Perfil
+### Backend
 
-Atualização de dados pessoais.
+API REST desenvolvida em Node.js e TypeScript responsável pelas regras de negócio, autenticação, integração de pagamentos e comunicação entre os ambientes.
 
-### RF04 — Exclusão de Conta (LGPD)
+### Frontend
 
-Direito ao esquecimento.
+Interface responsável pela interação dos usuários com o sistema.
 
-### RF05 — Emissão de Cartões
+### Comunicação
 
-* Físicos
-* Digitais
-
-### RF05.1 — Identidade Visual Dinâmica
-
-Temas personalizados conforme categoria do usuário.
-
-### RF06 — Vinculação de Dispositivos
-
-Múltiplos cartões por usuário.
-
-### RF07 — Consulta de Itinerários
-
-Horários e linhas.
-
-### RF08 — Previsão de Chegada
-
-Estimativa baseada em GPS.
-
-### RF09 — Mapeamento Interativo
-
-Visualização de rotas e paradas.
-
-### RF10 — Recarga Online
-
-Pix, cartão e histórico financeiro.
-
-### RF11 — Consulta de Saldo
-
-Visualização em tempo real.
-
-### RF12 — Bloqueio de Cartão
-
-Proteção em caso de perda ou roubo.
-
-### RF13 — Histórico e Extrato
-
-Relatórios financeiros e operacionais.
-
-### RF14 — Validação Automática
-
-QR Code ou cartão físico.
+* REST API
+* WebSockets
+* Webhooks
 
 ---
 
-# 🔐 Requisitos Não Funcionais
-
-### RNF01
-
-Disponibilidade 24/7.
-
-### RNF02
-
-HTTPS/TLS e criptografia de dados.
-
-### RNF03
-
-Tempo de resposta inferior a 1 segundo.
-
-### RNF04
-
-Escalabilidade para horários de pico.
-
-### RNF05
-
-Sincronização automática entre ambiente local e nuvem.
-
-### RNF06
-
-Acessibilidade e design responsivo.
-
----
-
-# 🗂️ Estrutura Conceitual do Projeto
+## 📂 Estrutura do Projeto
 
 ```text
-OnBus
-├── backend
-│   ├── config
-│   ├── controllers
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── services
-│   ├── database
-│   └── tests
+OnBus/
+├── backend/
+│   ├── .env
+│   ├── .env.example
+│   ├── package.json
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── database/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── server.js
+│   └── tests/
 │
-├── frontend
-│   ├── components
-│   ├── pages
-│   ├── services
-│   ├── assets
-│   ├── hooks
-│   └── styles
+├── frontend/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── styles/
 │
-├── docs
-├── prototipos
+├── docs/
+├── prototipos/
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-# 🧪 Estratégia de Testes
+## 🛠️ Tecnologias Utilizadas
 
-## Testes Unitários
+### Backend
 
-Validação de:
+* Node.js
+* TypeScript
+* Express.js
+* Knex.js
+* JWT
+* bcryptjs
 
-* Regras de negócio.
-* Cálculo de saldo.
-* Hash de senhas.
-* Tokens.
+### Banco de Dados
 
-## Testes de Integração
+* MySQL
+* Supabase (PostgreSQL)
 
-Validação de:
+### Frontend
 
-* APIs REST.
-* Comunicação entre módulos.
+* HTML5
+* CSS3
+* JavaScript
 
-## Testes de Performance
+### Comunicação
 
-Validação de:
+* REST API
+* WebSockets
+* Webhooks
 
-* Concorrência.
-* Latência.
-* Operação da catraca.
+### Infraestrutura
 
----
+* Render
+* GitHub
+* CI/CD
 
-# 🔒 Segurança e LGPD
+### Interface e Visualização
 
-* HTTPS/TLS obrigatório.
-* JWT para autenticação.
-* bcryptjs para hashing.
-* Tokenização de pagamentos.
-* Exclusão definitiva de dados mediante solicitação.
-* Proteção contra clonagem de cartões.
-* Controle de permissões e auditoria.
+* Canva
+* GSAP
+* Three.js
 
----
+### Testes
 
-# 📈 Roadmap
-
-## MVP
-
-* Cadastro.
-* Login.
-* Consulta de saldo.
-* Recarga online.
-* Cartões digitais.
-* Cartões físicos.
-* Validação de embarque.
-* Operação offline.
-* Bloqueio de cartões.
-* Itinerários.
-
-## Pós-MVP
-
-* GPS em tempo real.
-* Mapa interativo.
-* WebSockets.
-* Cashback.
-* Gamificação.
-* Chatbot inteligente.
-* Painel analítico.
-* Controle por voz.
-* Monitoramento operacional avançado.
+* Jest
+* Postman
 
 ---
 
-# 👨‍💻 Equipe
+## 📚 Documentação
 
-### Júlia — UX/UI Design
+A documentação completa do projeto está disponível na pasta:
 
-* Wireframes
-* Protótipos
-* Fluxos de navegação
-* Design System
-* Acessibilidade
+```text
+docs/
+```
 
-### Otávio — Front-end
+Ela contém informações detalhadas sobre:
 
-* Interfaces responsivas
-* Componentização
-* Temas dinâmicos
-* Experiência do usuário
+* Arquitetura do sistema
+* Requisitos funcionais e não funcionais
+* Modelagem de dados
+* Planejamento do produto
+* UX/UI
+* Estratégia de testes
+* Segurança e LGPD
+* Roadmap do projeto
+* Governança e processos de desenvolvimento
 
-### Enrique — Back-end e Arquitetura
+---
 
-* APIs REST
-* Modelagem orientada a objetos
-* Banco de dados
-* Integração de pagamentos
-* Segurança
-* Infraestrutura
+## 👥 Equipe
 
-### Lucas — Back-end e QA
+### Júlia
 
-* Testes automatizados
-* Integração entre sistemas
-* Garantia de qualidade
-* Administração do repositório
+UX/UI Design, prototipação, fluxos de navegação e acessibilidade.
+
+### Otávio Santos (T4vinhoh)
+
+Desenvolvimento Frontend e implementação das interfaces.
+
+### Enrique
+
+Arquitetura Backend, banco de dados, APIs REST, segurança e integrações.
+
+### Lucas
+
+Back-end, integração dos módulos, testes automatizados e QA.
 
 ---
