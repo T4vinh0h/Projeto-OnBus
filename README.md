@@ -225,28 +225,24 @@ OnBus/
 │   ├── .env
 │   ├── .env.example
 │   ├── package.json
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── database/
-│   │   ├── middleware/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   └── server.js
-│   └── tests/
+│   └── src/
+│       ├── controllers/
+│       ├── database/
+│       ├── middleware/
+│       ├── routes/
+│       ├── services/
+│       └── server.js
 │
 ├── frontend/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── styles/
+│   └── src/
+│       ├── assets/
+│       ├── components/
+│       ├── pages/
+│       ├── scripts/
+│       ├── services/
+│       └── styles/
 │
 ├── docs/
-├── prototipos/
 ├── .gitignore
 ├── LICENSE
 └── README.md
