@@ -299,7 +299,6 @@ OnBus/
 
 ### Testes
 
-* Jest
 * Postman
 
 ---
