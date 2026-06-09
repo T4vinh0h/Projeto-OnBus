@@ -32,7 +32,83 @@ Antes de começar, você precisa ter instalado em sua máquina:
 * **Navegador atualizado** (Google Chrome, Microsoft Edge ou Firefox).
 
 ---
+### 1️⃣ Configurar o Arquivo .env
 
+Antes de executar o sistema, configure o arquivo `.env` na pasta `backend/`.
+
+Utilize o `.env.example` como base:
+
+```env
+# =====================================================
+# CONFIGURAÇÕES GERAIS
+# =====================================================
+
+NODE_ENV=development
+PORT=3000
+
+JWT_SECRET=sua_chave_jwt
+
+# =====================================================
+# MODO DE OPERAÇÃO
+# local  = MySQL (offline/catraca)
+# online = Supabase (nuvem)
+# hybrid = ambos simultaneamente
+# =====================================================
+
+DATABASE_MODE=hybrid
+
+# =====================================================
+# MYSQL (BANCO LOCAL)
+# =====================================================
+
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=sua_senha
+MYSQL_DATABASE=onbus_local
+
+# =====================================================
+# SUPABASE (BANCO ONLINE)
+# =====================================================
+
+SUPABASE_URL=https://seu-projeto.supabase.co
+SUPABASE_ANON_KEY=sua_anon_key
+SUPABASE_SERVICE_ROLE_KEY=sua_service_role_key
+
+# =====================================================
+# RENDER
+# =====================================================
+
+RENDER_API_URL=https://onbus.onrender.com
+
+# =====================================================
+# WEBHOOKS DE PAGAMENTO
+# =====================================================
+
+WEBHOOK_SECRET=sua_chave_webhook
+
+# =====================================================
+# WEBSOCKET
+# =====================================================
+
+WS_PORT=3001
+
+# =====================================================
+# GPS / TELEMETRIA
+# =====================================================
+
+GPS_UPDATE_INTERVAL=10000
+```
+
+#### Modos disponíveis
+
+| Modo | Descrição |
+|--------|--------|
+| `local` | Utiliza apenas o banco MySQL local. |
+| `online` | Utiliza apenas o Supabase. |
+| `hybrid` | Utiliza MySQL local e Supabase simultaneamente (recomendado). |
+
+O modo híbrido representa a arquitetura oficial do OnBus, permitindo operação offline nas catracas e sincronização automática com a nuvem quando houver conectividade.
 ## 🚀 Passo a Passo para Rodar o Projeto
 
 ### 1️⃣ Configurar o Banco de Dados
