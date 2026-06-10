@@ -2,6 +2,9 @@
 
 O ecossistema OnBus adota o paradigma de **Orientação a Objetos (POO)**.
 
+> [!NOTE]
+> **Centralização no Backend:** Todos os processos e regras de negócio do projeto residem estritamente no backend. O frontend atua puramente como uma camada de apresentação (view), renderizando os dados processados e estruturados pelas APIs.
+
 O Backend utiliza TypeScript para garantir a robustez das regras de negócio, enquanto o Frontend utiliza JavaScript para agilidade na manipulação de interface.
 
 ## Hospedagem e Deploy
@@ -25,7 +28,8 @@ O Backend utiliza TypeScript para garantir a robustez das regras de negócio, en
 ## Query Builder
 
 - Knex.js
-- Abstração SQL unificada entre bancos locais e remotos
+- Abstração SQL unificada entre bancos locais (SQLite) e remotos (PostgreSQL/Supabase)
+- A troca de ambiente (desenvolvimento → produção) é feita apenas no `knexfile.ts`; migrations, seeds e services permanecem idênticos
 
 ## Comunicação
 
@@ -52,21 +56,24 @@ O Backend utiliza TypeScript para garantir a robustez das regras de negócio, en
 
 A persistência de dados é distribuída para garantir resiliência operacional e continuidade do serviço mesmo em cenários de indisponibilidade de rede.
 
-## 1. Ambiente Local (Validador e Contingência)
+## 1. Ambiente Local (Desenvolvimento e Contingência)
 
 ### Banco de Dados
 
-- MySQL instalado localmente no hardware da catraca
+- **SQLite** (`onbus.db`) — banco embutido, sem servidor, sem configuração
+- Gerenciado via **better-sqlite3** + **Knex.js**
 
 ### Mecanismo
 
-- Consultas otimizadas através do Knex.js local
+- Arquivo de banco gerado automaticamente em `backend/onbus.db` ao rodar `npm run setup`
+- Nenhum processo de servidor de banco de dados é necessário
+- Consultas executadas via Knex.js com as mesmas queries que serão usadas em produção
 
 ### Comportamento
 
 - Processamento do débito em menos de 1 segundo
 - Operação totalmente offline
-- Armazenamento local de logs de transações
+- Armazenamento local de transações da catraca em `catraca_offline.json`
 - Sincronização em lote com a nuvem após restabelecimento da conectividade
 
 ## 2. Ambiente Online (Nuvem Centralizada)
@@ -187,3 +194,15 @@ solicitarExclusaoLGPD()
 ```
 
 O método dispara rotinas de *hard delete* nas tabelas do Supabase para remoção definitiva dos dados pessoais do usuário, atendendo ao direito de exclusão previsto pela legislação.
+
+## Validações e Regras de Negócio Críticas (Backend)
+
+Para garantir integridade física, lógica e de conformidade do banco central, o backend executa as seguintes validações:
+
+1. **Validação de CPF e E-mail:**
+   - CPFs fornecidos no cadastro de usuários e perfis passam pelo algoritmo oficial de verificação matemática de 11 dígitos (dígitos verificadores).
+   - E-mails são validados contra expressões regulares sintáticas.
+2. **Autenticação de Equipamentos (Validadores):**
+   - Requisições enviadas para as rotas `/validador/embarque` e `/validador/sincronizar` validam se o identificador `validadorId` do dispositivo existe no banco de dados central e se o seu status é `ativo`.
+3. **Limitação de Cartão Ativo (Regra de Negócio):**
+   - Cada usuário está limitado a possuir no máximo **um cartão ativo simultaneamente** no sistema. Para emitir ou reemitir um novo cartão, qualquer cartão ativo anterior precisa ser explicitamente bloqueado ou cancelado.

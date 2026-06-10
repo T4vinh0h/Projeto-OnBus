@@ -1,1 +1,2 @@
-// Rotas da API OnBus
+import router from './routes';
+export default router;

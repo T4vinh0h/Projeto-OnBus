@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cd backend && npm run dev",
     "cli": "cd backend && npm run cli",
-    "setup": "echo Setup do banco de dados (em desenvolvimento)",
+    "setup": "cd backend && npx tsx src/database/setup.ts",
     "web": "echo Frontend em desenvolvimento",
     "full": "npm run setup && npm run dev"
   }

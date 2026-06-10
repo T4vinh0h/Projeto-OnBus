@@ -4,6 +4,9 @@ O OnBus é um sistema integrado de bilhetagem eletrônica para o transporte cole
 
 O objetivo do projeto é solucionar as falhas de latência na compensação de créditos e a dependência de conectividade contínua em campo. Para isso, o OnBus adota uma arquitetura híbrida dividida em duas grandes fases de entrega: um Mínimo Produto Viável (MVP) focado em bilhetagem e operação offline, e uma Versão Completa (Pós-MVP) voltada para monitoramento avançado.
 
+> [!IMPORTANT]
+> **Premissa Arquitetural:** Toda a inteligência, validações de segurança, regras de negócio e processamento de dados são executados de forma centralizada no backend. O frontend não possui lógica de processos de negócio ativa, servindo unicamente para renderizar a interface visual e capturar as interações do usuário.
+
 # 1.2 Objetivos Estratégicos do Sistema
 
 ## Transparência e Sincronização
@@ -146,7 +149,7 @@ O suporte ao usuário adotará um modelo de atendimento híbrido (FAQs claras co
 | RF04 | Opção de solicitar a exclusão definitiva da conta e a eliminação dos dados pessoais do banco de dados (Direito ao Esquecimento). |
 | RF05 | Solicitação de cartões físicos e digitais (Comum, Estudante, Idoso) com validação de regras de negócio específicas para cada categoria. |
 | RF05.1 | O sistema deve carregar um layout visual diferente para cada tipo de cartão (estudante, idoso e comum), suportando futuros pacotes de personalização ou temas customizados do banco de ideias. |
-| RF06 | Vínculo de múltiplos cartões (físicos e virtuais) a um único perfil de usuário (CPF). |
+| RF06 | Limitação de cartão único ativo. Um usuário só pode possuir no máximo um cartão ativo simultaneamente. Para solicitar um novo, deve obrigatoriamente bloquear o cartão atual. |
 | RF07 | Exibição da grade horária das linhas de ônibus segmentadas por dias úteis, sábados e domingos. |
 | RF08 | Cálculo do tempo estimado de chegada do ônibus na parada através de rastreamento por geolocalização. |
 | RF09 | Plotagem de rotas, trajetos e pontos de parada em um mapa digital integrado. |

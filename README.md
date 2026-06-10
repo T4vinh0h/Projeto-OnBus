@@ -2,18 +2,22 @@
 
 O **OnBus** é uma plataforma Full Stack de bilhetagem eletrônica para transporte coletivo urbano, inspirada no ecossistema de mobilidade de Pelotas/RS.
 
-O sistema foi desenvolvido para modernizar a experiência dos passageiros e operadores do transporte público, oferecendo recursos como gestão de cartões físicos e digitais, recargas online, consulta de saldo, validação de embarque e monitoramento operacional.
+O sistema moderniza a experiência de passageiros e operadores do transporte público, com gestão de cartões físicos e digitais, recargas via Pix, consulta de saldo, validação de embarque e monitoramento operacional.
 
-Sua arquitetura híbrida permite que os validadores operem mesmo sem conexão com a internet, sincronizando automaticamente os dados com a nuvem quando a conectividade for restabelecida.
+Sua arquitetura híbrida permite que os validadores operem mesmo sem conexão com a internet, sincronizando automaticamente com a nuvem quando a conectividade for restabelecida.
 
 ---
 
 ## 📋 Pré-requisitos
-Antes de começar, você precisa ter instalado em sua máquina:
-*   **Node.js** (versão 18 ou superior) - [Baixe aqui](https://nodejs.org/)
-*   **MySQL** (versão 8 ou superior) - [Baixe aqui](https://dev.mysql.com/downloads/)
-*   **VS Code** ou outro editor de código.
-*   **Navegador atualizado** (Google Chrome, Microsoft Edge ou Firefox).
+
+Antes de começar, você precisa ter instalado:
+
+- **Node.js** (versão 18 ou superior) — [Baixe aqui](https://nodejs.org/)
+- **VS Code** ou outro editor de código
+- **Navegador atualizado** (Chrome, Edge ou Firefox)
+
+> [!NOTE]
+> Nenhum servidor de banco de dados é necessário. O OnBus usa **SQLite** localmente — o banco é criado automaticamente como um arquivo `onbus.db` na pasta `backend/`.
 
 ---
 
@@ -44,73 +48,26 @@ npm install
 
 ## ⚙️ Configuração
 
-Crie um arquivo `.env` dentro da pasta `backend/` utilizando o `.env.example` como base.
+O arquivo `backend/.env` já vem pré-configurado para desenvolvimento local com SQLite. **Nenhuma configuração de banco de dados é necessária para rodar localmente.**
 
-### Exemplo
+Para consultar todas as variáveis disponíveis, veja o arquivo `backend/.env.example`.
+
+### Variáveis de ambiente (resumo)
 
 ```env
-# =====================================================
-# AMBIENTE
-# =====================================================
-
+# Ambiente
 NODE_ENV=development
 PORT=3000
-
 JWT_SECRET=sua_chave_jwt
 
-# =====================================================
-# MODO DE OPERAÇÃO
-# local | online | hybrid
-# =====================================================
-
-DATABASE_MODE=hybrid
-
-# =====================================================
-# MYSQL (OFFLINE)
-# =====================================================
-
-MYSQL_HOST=localhost
-MYSQL_PORT=3306
-MYSQL_USER=root
-MYSQL_PASSWORD=sua_senha
-MYSQL_DATABASE=onbus_local
-
-# =====================================================
-# SUPABASE (ONLINE)
-# =====================================================
-
-SUPABASE_URL=https://seu-projeto.supabase.co
-SUPABASE_ANON_KEY=sua_anon_key
-SUPABASE_SERVICE_ROLE_KEY=sua_service_role_key
-
-# =====================================================
-# RENDER
-# =====================================================
-
-RENDER_API_URL=https://seu-projeto.onrender.com
-
-# =====================================================
-# WEBHOOKS
-# =====================================================
-
+# Webhooks (HMAC SHA-256)
 WEBHOOK_SECRET=sua_chave_webhook
 
-# =====================================================
-# WEBSOCKETS
-# =====================================================
-
-WS_PORT=3001
+# Produção (Supabase) — deixar vazio em desenvolvimento
+DATABASE_URL=
+SUPABASE_URL=
+SUPABASE_ANON_KEY=
 ```
-
-### Modos disponíveis
-
-| Modo   | Descrição                                |
-| ------ | ---------------------------------------- |
-| local  | Utiliza apenas o MySQL local             |
-| online | Utiliza apenas o Supabase                |
-| hybrid | Utiliza MySQL e Supabase simultaneamente |
-
-O modo **hybrid** é o recomendado por representar a arquitetura oficial do projeto.
 
 ---
 
@@ -119,16 +76,17 @@ O modo **hybrid** é o recomendado por representar a arquitetura oficial do proj
 ### Configurar Banco de Dados
 
 ```bash
+cd backend
 npm run setup
 ```
 
-Funções:
+O que faz:
+- Cria o arquivo `backend/onbus.db` (SQLite)
+- Executa as migrations (cria as tabelas)
+- Popula com dados iniciais (seeds)
 
-* Cria a estrutura completa do banco de dados.
-* Executa migrations e configurações iniciais.
-* Caso as tabelas já existam, elas serão removidas e recriadas.
-
-> Atenção: este comando apaga os dados existentes.
+> [!WARNING]
+> Este comando apaga todos os dados existentes no banco.
 
 ---
 
@@ -138,82 +96,66 @@ Funções:
 npm run dev
 ```
 
-Funções:
+Inicia o servidor Express em `http://localhost:3000` com hot-reload automático.
 
-* Inicializa o servidor.
-* Verifica se a porta já está em uso.
-* Reinicia automaticamente processos anteriores quando necessário.
+---
+
+### Executar CLI (Interface de Testes)
+
+```bash
+npm run cli
+```
+
+Abre a interface interativa no terminal para testar todos os fluxos do sistema sem depender do frontend.
 
 ---
 
 ### Executar Frontend
 
 ```bash
+cd ../frontend
 npm run web
 ```
 
-Funções:
-
-* Inicializa a aplicação frontend localmente.
-* Disponibiliza a interface para acesso via navegador.
-
----
-
-### Executar Tudo (Recomendado)
-
-```bash
-npm run full
-```
-
-Executa automaticamente:
-
-1. Configuração do banco de dados (`setup`)
-2. Inicialização do backend (`dev`)
-3. Inicialização do frontend (`web`)
+Disponibiliza a interface em `http://localhost:5173`.
 
 ---
 
 ## 🌐 Acesso ao Sistema
 
-Frontend:
-
-```text
-http://localhost:5173
-```
-
-Backend:
-
-```text
-http://localhost:3000
-```
+| Serviço | URL |
+|---|---|
+| Backend (API REST) | `http://localhost:3000` |
+| Frontend | `http://localhost:5173` |
 
 ---
 
 ## 🏗️ Arquitetura
 
-O OnBus utiliza uma arquitetura híbrida composta por:
+> [!IMPORTANT]
+> **Backend First:** Toda lógica de negócio, validações de segurança e processamento de dados rodam exclusivamente no backend. O frontend é uma camada de apresentação pura — renderiza dados e captura interações do usuário.
 
-### Banco Local (MySQL)
+### Banco Local (SQLite)
 
-Responsável pela operação offline dos validadores de embarque.
+Usado durante o desenvolvimento. Banco embutido, sem servidor, sem configuração. O arquivo `onbus.db` é criado automaticamente.
 
-### Banco Online (Supabase)
+### Banco de Produção (Supabase / PostgreSQL)
 
-Responsável pela centralização e sincronização dos dados do sistema.
+Centraliza e sincroniza os dados em produção. Para migrar do SQLite para o Supabase, apenas as variáveis de ambiente mudam — o código de migrations, services e routes permanece idêntico graças ao Knex.js.
 
 ### Backend
 
-API REST desenvolvida em Node.js e TypeScript responsável pelas regras de negócio, autenticação, integração de pagamentos e comunicação entre os ambientes.
+API REST em Node.js + TypeScript com Express.js, responsável por autenticação, regras de negócio, integração de pagamentos e comunicação entre ambientes.
 
 ### Frontend
 
-Interface responsável pela interação dos usuários com o sistema.
+Interface para interação dos usuários com o sistema.
 
 ### Comunicação
 
-* REST API
-* WebSockets
-* Webhooks
+- REST API
+- WebSockets
+- Webhooks (HMAC SHA-256)
 
 ---
 
@@ -222,16 +164,29 @@ Interface responsável pela interação dos usuários com o sistema.
 ```text
 OnBus/
 ├── backend/
-│   ├── .env
-│   ├── .env.example
+│   ├── .env                    # Variáveis de ambiente (não commitar)
+│   ├── .env.example            # Modelo de configuração
+│   ├── onbus.db                # Banco SQLite (gerado após npm run setup)
 │   ├── package.json
 │   └── src/
-│       ├── controllers/
+│       ├── server.ts           # Ponto de entrada do servidor
+│       ├── cli.ts              # CLI de testes interativa
 │       ├── database/
+│       │   ├── connection.ts   # Instância Knex + wrappers de tabela
+│       │   ├── knexfile.ts     # Configuração do Knex (SQLite / PostgreSQL)
+│       │   ├── setup.ts        # Script de migrations e seeds
+│       │   ├── migrations/     # DDL das tabelas (Knex)
+│       │   └── seeds/          # Dados iniciais
 │       ├── middleware/
+│       │   └── authMiddleware.ts
 │       ├── routes/
-│       ├── services/
-│       └── server.js
+│       │   └── routes.ts       # Todas as rotas da API
+│       └── services/
+│           ├── CartaoService.ts
+│           ├── UsuarioService.ts
+│           ├── ValidadorService.ts
+│           ├── HorarioService.ts
+│           └── WebhookService.ts
 │
 ├── frontend/
 │   └── src/
@@ -242,7 +197,7 @@ OnBus/
 │       ├── services/
 │       └── styles/
 │
-├── docs/
+├── docs/                       # Documentação detalhada do projeto
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -254,96 +209,104 @@ OnBus/
 
 ### Backend
 
-* Node.js
-* TypeScript
-* Express.js
-* Knex.js
-* JWT
-* bcryptjs
+| Tecnologia | Função |
+|---|---|
+| Node.js + TypeScript | Runtime e tipagem estática |
+| Express.js | Framework HTTP |
+| Knex.js | Query builder (SQLite ↔ PostgreSQL sem reescrever código) |
+| better-sqlite3 | Driver SQLite local (desenvolvimento) |
+| JWT | Autenticação stateless |
+| bcryptjs | Hash de senhas |
 
 ### Banco de Dados
 
-* MySQL
-* Supabase (PostgreSQL)
+| Ambiente | Banco |
+|---|---|
+| Desenvolvimento | SQLite (`onbus.db`) |
+| Produção | Supabase (PostgreSQL) |
+
+> A troca de ambiente é transparente — apenas o `knexfile.ts` muda.
 
 ### Frontend
 
-* HTML5
-* CSS3
-* JavaScript
+- HTML5, CSS3, JavaScript (ES6+)
+- GSAP (animações)
+- Three.js (renderização 3D)
 
 ### Comunicação
 
-* REST API
-* WebSockets
-* Webhooks
+- REST API (JSON)
+- WebSockets (eventos em tempo real)
+- Webhooks com assinatura HMAC SHA-256
 
 ### Infraestrutura
 
-* Render
-* GitHub
-* CI/CD
-
-### Interface e Visualização
-
-* Canva
-* GSAP
-* Three.js
-
-### Testes
-
-* CLI interativa
+- Render (deploy do backend)
+- Supabase (banco de dados em produção)
+- GitHub + CI/CD
 
 ---
 
 ## 🧪 CLI de Testes
 
-Durante o desenvolvimento, a validação do backend é feita por uma CLI interativa que permite simular os fluxos do sistema sem depender do frontend.
+A validação do backend é feita por uma CLI interativa que simula todos os fluxos sem depender do frontend:
 
 ```bash
+cd backend
 npm run cli
 ```
+
+Funcionalidades disponíveis na CLI:
+
+| # | Função |
+|---|---|
+| 1 | Ver perfil |
+| 2 | Solicitar cartão (Comum / Estudante / Idoso) |
+| 3 | Listar cartões e saldos |
+| 4 | Recarregar via Pix (gera código Copia e Cola) |
+| 5 | Bloquear cartão |
+| 6 | Solicitar segunda via |
+| 7 | Simular catraca (embarque online ou offline) |
+| 8 | Ver histórico de transações |
+| 9 | Alternar modo online/offline do validador |
+| 10 | Sincronizar fila de transações offline |
+| 11 | Consultar itinerários de Pelotas/RS |
+| 12 | Simular confirmação de Pix via Webhook |
+| 13 | Excluir conta (LGPD) |
+
+---
+
+## 🔐 Segurança
+
+- **JWT** — tokens de autenticação stateless com expiração
+- **bcryptjs** — hash de senhas com 10 rounds de salt
+- **HMAC SHA-256** — assinatura de webhooks resistente a adulteração
+- **timingSafeEqual** — comparação de assinaturas resistente a timing attacks
+- **LGPD Hard Delete** — exclusão permanente em cascata de todos os dados do usuário
 
 ---
 
 ## 📚 Documentação
 
-A documentação completa do projeto está disponível na pasta:
+Documentação completa disponível em `docs/`:
 
-```text
-docs/
-```
-
-Ela contém informações detalhadas sobre:
-
-* Arquitetura do sistema
-* Requisitos funcionais e não funcionais
-* Modelagem de dados
-* Planejamento do produto
-* UX/UI
-* Estratégia de testes
-* Segurança e LGPD
-* Roadmap do projeto
-* Governança e processos de desenvolvimento
+- Arquitetura do sistema
+- Requisitos funcionais e não funcionais
+- Modelagem de dados
+- Planejamento do produto
+- UX/UI
+- Estratégia de testes
+- Segurança e LGPD
+- Roadmap
+- Governança e processos
 
 ---
 
 ## 👥 Equipe
 
-### Julia Coinceição
-
-UX/UI Design, prototipação, fluxos de navegação e acessibilidade.
-
-### Otávio Santos
-
-Desenvolvimento Frontend e implementação das interfaces.
-
-### Enrique Silveira
-
-Arquitetura Backend, banco de dados, APIs REST, segurança e integrações.
-
-### Lucas Moreira
-
-Backend, integração dos módulos, testes automatizados e QA.
-
----
+| Nome | Área |
+|---|---|
+| **Julia Conceição** | UX/UI Design, prototipação, fluxos e acessibilidade |
+| **Otávio Santos** | Desenvolvimento Frontend |
+| **Enrique Silveira** | Arquitetura Backend, banco de dados, APIs e segurança |
+| **Lucas Moreira** | Backend, integração de módulos e QA |
