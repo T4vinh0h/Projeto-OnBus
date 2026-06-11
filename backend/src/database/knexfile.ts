@@ -5,7 +5,7 @@ import * as path from 'path';
  * Configuração do Knex para os diferentes ambientes.
  *
  * LOCAL (desenvolvimento): SQLite — banco de dados embutido, sem servidor.
- *   Arquivo gerado em: backend/onbus.db
+ *   Arquivo gerado em: backend/src/database/onbus.db
  *
  * PRODUCTION (nuvem): PostgreSQL via Supabase.
  *   Para migrar, basta trocar `client` e `connection` abaixo.
