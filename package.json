@@ -1,0 +1,12 @@
+{
+  "name": "onbus",
+  "version": "1.0.0",
+  "description": "OnBus - Sistema Inteligente de Bilhetagem e Mobilidade Urbana",
+  "scripts": {
+    "dev": "cd backend && npm run dev",
+    "cli": "cd backend && npm run cli",
+    "setup": "cd backend && npx tsx src/database/setup.ts",
+    "web": "echo Frontend em desenvolvimento",
+    "full": "npm run setup && npm run dev"
+  }
+}
