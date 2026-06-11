@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node backend/dist/server.js",
     "dev": "tsx watch backend/src/server.ts",
-    "build": "tsc",
+    "build": "tsc -p backend/tsconfig.json",
     "cli": "tsx backend/src/cli.ts",
     "setup": "tsx backend/src/database/setup.ts",
+    "postinstall": "node scripts/postinstall.mjs",
     "web": "echo Frontend em desenvolvimento",
     "full": "npm run setup && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"

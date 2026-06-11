@@ -30,43 +30,44 @@ git clone https://github.com/T4vinh0h/Projeto-OnBus.git
 cd Projeto-OnBus
 ```
 
-Instale as dependências do backend:
+Instale as dependências e crie o `.env` (na raiz do projeto):
 
 ```bash
-cd backend
 npm install
+cp .env.example .env
 ```
 
-Instale as dependências do frontend:
-
-```bash
-cd ../frontend
-npm install
-```
+> [!NOTE]
+> O `npm install` já prepara o banco SQLite local automaticamente (cria o `backend/onbus.db` com as tabelas e os dados iniciais, caso ainda não exista). Para rodar localmente, **só é preciso `npm install` + copiar o `.env`** — sem editar nada.
 
 ---
 
 ## ⚙️ Configuração
 
-O arquivo `backend/.env` já vem pré-configurado para desenvolvimento local com SQLite. **Nenhuma configuração de banco de dados é necessária para rodar localmente.**
+O `.env` fica na **raiz do projeto**. Para rodar **localmente**, basta copiar o modelo e usar como está — ele já vem pronto para SQLite, sem precisar editar nada:
 
-Para consultar todas as variáveis disponíveis, veja o arquivo `backend/.env.example`.
+```bash
+cp .env.example .env
+```
+
+Para rodar **online (produção)** com Supabase/PostgreSQL, mude `NODE_ENV` para `production` e preencha a `DATABASE_URL` (e as variáveis `SUPABASE_*`, se for usá-las) no seu `.env`.
 
 ### Variáveis de ambiente (resumo)
 
 ```env
-# Ambiente
+# Ambiente: development = SQLite local | production = PostgreSQL/Supabase
 NODE_ENV=development
 PORT=3000
-JWT_SECRET=sua_chave_jwt
 
-# Webhooks (HMAC SHA-256)
+# Autenticação / segurança (troque por valores fortes em produção)
+JWT_SECRET=sua_chave_jwt
 WEBHOOK_SECRET=sua_chave_webhook
 
-# Produção (Supabase) — deixar vazio em desenvolvimento
+# Produção/online (deixar vazio em desenvolvimento)
 DATABASE_URL=
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 ```
 
 ---
@@ -75,8 +76,9 @@ SUPABASE_ANON_KEY=
 
 ### Configurar Banco de Dados
 
+O banco é preparado automaticamente no `npm install`. Use este comando (na raiz) apenas se quiser **recriar/resetar** o banco do zero:
+
 ```bash
-cd backend
 npm run setup
 ```
 
@@ -113,7 +115,7 @@ Abre a interface interativa no terminal para testar todos os fluxos do sistema s
 ### Executar Frontend
 
 ```bash
-cd ../frontend
+cd frontend
 npm run web
 ```
 
