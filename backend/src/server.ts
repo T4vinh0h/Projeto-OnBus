@@ -2,7 +2,8 @@ import * as dotenv from 'dotenv';
 import * as path from 'path';
 
 // Carrega variáveis de ambiente antes de qualquer import que as use
-dotenv.config({ path: path.join(__dirname, '../.env') });
+// O .env fica na raiz do projeto (mesmo nível do package.json)
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 import express from 'express';
 import router from './routes';

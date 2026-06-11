@@ -4,8 +4,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as crypto from 'crypto';
 
-// Carrega variáveis de ambiente
-dotenv.config({ path: path.join(__dirname, '../.env') });
+// Carrega variáveis de ambiente (o .env fica na raiz do projeto)
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const PORT = process.env.PORT || 3000;
 const API_URL = `http://localhost:${PORT}/api`;
