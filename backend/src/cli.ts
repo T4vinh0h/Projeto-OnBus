@@ -97,7 +97,7 @@ async function request(endpoint: string, method = 'GET', body: any = null, requi
 
   try {
     const res = await fetch(`${API_URL}${endpoint}`, config);
-    const data = await res.json();
+    const data: any = await res.json();
     if (!res.ok) {
       throw new Error(data.error || 'Erro na requisição.');
     }
@@ -891,7 +891,7 @@ async function simularWebhookPix() {
       body: JSON.stringify(payload)
     });
 
-    const responseData = await res.json();
+    const responseData: any = await res.json();
     if (!res.ok) {
       throw new Error(responseData.error || 'Erro ao simular webhook.');
     }

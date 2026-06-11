@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.json({
     app: 'OnBus API - Sistema Inteligente de Bilhetagem',
     status: 'online',
-    banco: 'SQLite (onbus.db)',
+    banco: 'SQLite (backend/src/database/onbus.db)',
     versao: '1.0.0'
   });
 });
@@ -37,6 +37,6 @@ app.listen(PORT, () => {
   console.log(`==============================================`);
   console.log(`🚌 Servidor OnBus rodando na porta ${PORT}`);
   console.log(`🔗 API URL: http://localhost:${PORT}`);
-  console.log(`🗄️  Banco: SQLite (onbus.db)`);
+  console.log(`🗄️  Banco: SQLite (backend/src/database/onbus.db)`);
   console.log(`==============================================`);
 });

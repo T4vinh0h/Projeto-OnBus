@@ -5,7 +5,7 @@ import * as path from 'path';
  * Configuração do Knex para os diferentes ambientes.
  *
  * LOCAL (desenvolvimento): SQLite — banco de dados embutido, sem servidor.
- *   Arquivo gerado em: backend/onbus.db
+ *   Arquivo gerado em: backend/src/database/onbus.db
  *
  * PRODUCTION (nuvem): PostgreSQL via Supabase.
  *   Para migrar, basta trocar `client` e `connection` abaixo.
@@ -16,8 +16,8 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'better-sqlite3',
     connection: {
-      // Caminho absoluto para o arquivo .db gerado em backend/
-      filename: path.join(__dirname, '../../onbus.db')
+      // Caminho absoluto para o arquivo .db gerado em backend/src/database/
+      filename: path.join(__dirname, 'onbus.db')
     },
     // SQLite não suporta DEFAULT para colunas opcionais — obrigatório
     useNullAsDefault: true,

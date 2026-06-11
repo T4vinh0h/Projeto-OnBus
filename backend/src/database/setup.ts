@@ -5,7 +5,7 @@ import config from './knexfile';
  * Script de setup do banco de dados.
  *
  * O que faz:
- *   1. Conecta ao SQLite (cria o arquivo onbus.db se não existir)
+ *   1. Conecta ao SQLite (cria o arquivo backend/src/database/onbus.db se não existir)
  *   2. Reverte todas as migrations existentes (rollback)
  *   3. Executa as migrations do zero (cria as tabelas)
  *   4. Popula com os dados iniciais (seeds)
@@ -19,7 +19,7 @@ async function setup() {
 
   try {
     console.log('🗄️  Iniciando setup do banco de dados SQLite...');
-    console.log('   Arquivo: onbus.db');
+    console.log('   Arquivo: backend/src/database/onbus.db');
 
     console.log('\n⬇️  Revertendo migrations anteriores (rollback)...');
     await kInstance.migrate.rollback(undefined, true);
